@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:test/Views/widgets/main_button.dart';
 import 'package:test/Views/widgets/social_media_icon.dart';
+import 'package:test/utils/app_router.dart';
 import 'package:test/utils/enums.dart';
 
 class AuthPage extends StatefulWidget {
@@ -89,7 +90,7 @@ class _AuthPageState extends State<AuthPage> {
                   title: _authType == AuthType.login ? 'Login' : 'Sign Up',
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      debugPrint('Authenticated!');
+                      Navigator.pushNamed(context, AppRouter.navBarPage);
                     }
                   },
                 ),
