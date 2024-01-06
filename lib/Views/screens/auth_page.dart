@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:test/Views/widgets/main_button.dart';
+import 'package:test/Views/widgets/social_media_icon.dart';
 import 'package:test/utils/enums.dart';
 
 class AuthPage extends StatefulWidget {
@@ -14,7 +15,17 @@ class _AuthPageState extends State<AuthPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
+  final _emailFocusNode = FocusNode();
+  final _passFocusNode = FocusNode();
   var _authType = AuthType.login;
+
+  @override
+  void dispose() {
+    _emailController.clear();
+    _passController.clear();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +49,11 @@ class _AuthPageState extends State<AuthPage> {
                   height: 70,
                 ),
                 TextFormField(
+                  textInputAction: TextInputAction.next,
+                  focusNode: _emailFocusNode,
                   controller: _emailController,
+                  onEditingComplete: () =>
+                      FocusScope.of(context).requestFocus(_passFocusNode),
                   validator: (val) =>
                       val!.isEmpty ? 'Please Enter your email' : null,
                   decoration: const InputDecoration(
@@ -48,6 +63,7 @@ class _AuthPageState extends State<AuthPage> {
                   height: 20,
                 ),
                 TextFormField(
+                  focusNode: _passFocusNode,
                   controller: _passController,
                   validator: (val) =>
                       val!.isEmpty ? 'Please Enter your password' : null,
@@ -88,6 +104,7 @@ class _AuthPageState extends State<AuthPage> {
                         : "Already have account? Login"),
                     onTap: () {
                       _formKey.currentState!.reset();
+
                       setState(() {
                         if (_authType == AuthType.login) {
                           _authType = AuthType.register;
@@ -109,38 +126,18 @@ class _AuthPageState extends State<AuthPage> {
                 const SizedBox(
                   height: 16,
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                              color: const Color.fromARGB(255, 232, 228, 228))),
-                      height: 65,
-                      width: 75,
-                      child: const Icon(
-                        FontAwesomeIcons.squareInstagram,
-                        size: 38,
-                        color: Colors.pink,
-                      ),
-                    ),
-                    const SizedBox(
+                    SocialMediaIcon(
+                        icon: FontAwesomeIcons.squareFacebook,
+                        color: Colors.blue),
+                    SizedBox(
                       width: 16,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                              color: const Color.fromARGB(255, 232, 228, 228))),
-                      height: 65,
-                      width: 75,
-                      child: const Icon(
-                        FontAwesomeIcons.squareFacebook,
-                        size: 38,
-                        color: Colors.blue,
-                      ),
-                    )
+                    SocialMediaIcon(
+                        icon: FontAwesomeIcons.squareInstagram,
+                        color: Colors.pink),
                   ],
                 ),
               ],
