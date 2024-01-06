@@ -71,7 +71,11 @@ class _AuthPageState extends State<AuthPage> {
                 ),
                 MainButton(
                   title: _authType == AuthType.login ? 'Login' : 'Sign Up',
-                  onTap: () {},
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      debugPrint('Authenticated!');
+                    }
+                  },
                 ),
                 const SizedBox(
                   height: 16,
@@ -83,6 +87,7 @@ class _AuthPageState extends State<AuthPage> {
                         ? "Don't have an account? Register"
                         : "Already have account? Login"),
                     onTap: () {
+                      _formKey.currentState!.reset();
                       setState(() {
                         if (_authType == AuthType.login) {
                           _authType = AuthType.register;
