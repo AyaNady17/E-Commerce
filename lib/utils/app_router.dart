@@ -8,6 +8,7 @@ class AppRouter {
   static const String homePage = 'HomePage';
   static const String authPage = 'AuthPage';
   static const String navBarPage = 'NavBarPage';
+  static const String landingPage = 'landingPage';
   static Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case homePage:
@@ -16,6 +17,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const AuthPage());
       case navBarPage:
         return MaterialPageRoute(builder: (_) => const NavBarPage());
+      case landingPage:
+        return MaterialPageRoute(builder: (_) => const LandingPage());
     }
   }
 }

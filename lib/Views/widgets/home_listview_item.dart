@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:test/utils/app_assets.dart';
+import 'package:test/model/product_model.dart';
 
 class ListViewHomeItem extends StatelessWidget {
-  const ListViewHomeItem({super.key});
+  const ListViewHomeItem({super.key, required this.productModel});
+  final ProductModel productModel;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class ListViewHomeItem extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
                 child: Image.network(
-                  AppAssets.tempProductAsset1,
+                  productModel.imageUrl,
                   width: MediaQuery.of(context).size.width * 0.45,
                   height: MediaQuery.of(context).size.height * 0.25,
                   fit: BoxFit.cover,
@@ -38,7 +39,7 @@ class ListViewHomeItem extends StatelessWidget {
                       padding: const EdgeInsets.all(4.0),
                       child: Center(
                         child: Text(
-                          '-20%',
+                          "${productModel.discount}%",
                           style:
                               Theme.of(context).textTheme.bodySmall!.copyWith(
                                     color: Colors.white,
@@ -53,25 +54,38 @@ class ListViewHomeItem extends StatelessWidget {
           ),
           const SizedBox(height: 8.0),
           Text(
-            'Casual',
+            productModel.category,
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   color: Colors.grey,
                 ),
           ),
           const SizedBox(height: 6.0),
           Text(
-            'Cotton Pullover',
+            productModel.title,
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
           ),
           const SizedBox(height: 6.0),
-          Text(
-            '20\$',
-            style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: Colors.grey,
+          Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: "${productModel.price}\$",
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      color: Colors.grey,
+                      decoration: TextDecoration.lineThrough),
                 ),
-          ),
+                TextSpan(
+                  text:
+                      " ${(productModel.price) - (productModel.discount / 100) * (productModel.price)}\$",
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                        color: Colors.red,
+                      ),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
