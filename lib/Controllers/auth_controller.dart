@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 
@@ -28,6 +27,10 @@ class AuthController with ChangeNotifier {
     } on Exception {
       rethrow;
     }
+  }
+
+  Future<void> logOut() async {
+    await authBase.logOut();
   }
 
   void updateEmail(String email) {

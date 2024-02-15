@@ -14,7 +14,7 @@ class LandingPage extends StatelessWidget {
     if (CacheHelper().getData(key: 'isLoggedIn') == true) {
       return const NavBarPage();
     } else {
-      return AuthPage();
+      return const AuthPage();
     }
   }
 }

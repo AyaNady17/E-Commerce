@@ -63,9 +63,8 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    AuthBase auth = Provider.of<AuthBase>(context);
     return ChangeNotifierProvider<AuthController>(
-        create: (context) => AuthController(authBase: auth),
+        create: (context) => AuthController(authBase: Auth()),
         child: Consumer<AuthController>(
           builder: (_, model, __) {
             return Scaffold(
@@ -159,6 +158,8 @@ class _AuthPageState extends State<AuthPage> {
                                 : "Already have account? Login"),
                             onTap: () {
                               _formKey.currentState!.reset();
+                              _emailController.clear();
+                              _passController.clear();
                               model.toggleAuthFormType(model.authType);
                             },
                           ),
