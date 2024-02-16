@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreServices {
   FirestoreServices._();
-  static final instrance = FirestoreServices._();
+  static final instance = FirestoreServices._();
   final _firestore = FirebaseFirestore.instance;
   Future<void> setData(
       {required String path, required Map<String, dynamic> data}) async {

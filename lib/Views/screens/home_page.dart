@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:test/Controllers/database_controller.dart';
 import 'package:test/Views/widgets/home_photo_cover.dart';
 import 'package:test/Views/widgets/listview_home.dart';
 
@@ -7,6 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final database = Provider.of<DataBase>(context);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -29,7 +32,9 @@ class HomePage extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          const ListViewHome(),
+          ListViewHome(
+            productsStream: database.salesProductsStream(),
+          ),
           const SizedBox(
             height: 16,
           ),
@@ -48,7 +53,9 @@ class HomePage extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          const ListViewHome(),
+          ListViewHome(
+            productsStream: database.newProductsStream(),
+          ),
         ],
       ),
     );

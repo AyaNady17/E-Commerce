@@ -78,7 +78,7 @@ class ListViewHomeItem extends StatelessWidget {
                 ),
                 TextSpan(
                   text:
-                      " ${(productModel.price) - (productModel.discount / 100) * (productModel.price)}\$",
+                      " ${(productModel.price) - (productModel.discount! / 100) * (productModel.price)}\$",
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
                         color: Colors.red,
                       ),

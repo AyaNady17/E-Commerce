@@ -5,17 +5,18 @@ class ProductModel {
   final String title;
   final String category;
   final double price;
-  final int discount;
+  final int? discount;
   final String imageUrl;
+  final int? rate;
 
-  ProductModel({
-    required this.id,
-    required this.title,
-    required this.category,
-    required this.price,
-    this.discount = 0,
-    required this.imageUrl,
-  });
+  ProductModel(
+      {required this.id,
+      required this.title,
+      required this.category,
+      required this.price,
+      this.discount = 0,
+      required this.imageUrl,
+      this.rate});
 
   factory ProductModel.fromMap(Map<String, dynamic> map, String docId) {
     return ProductModel(
@@ -25,6 +26,7 @@ class ProductModel {
       price: map["price"],
       imageUrl: map["imageUrl"],
       discount: map['discount'],
+      rate: map['rate'],
     );
   }
 }
