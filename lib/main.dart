@@ -6,6 +6,8 @@ import 'package:test/firebase_options.dart';
 import 'package:test/services/auth.dart';
 import 'package:test/utils/app_router.dart';
 import 'package:test/utils/cach_helper.dart';
+import 'package:test/utils/themes/darktheme.dart';
+import 'package:test/utils/themes/lightheme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,41 +33,10 @@ class TestApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'E-Commerce App',
-      theme: appTheme(),
+      theme: appThemeLight(),
       debugShowCheckedModeBanner: false,
       onGenerateRoute: AppRouter.generateRoute,
       initialRoute: AppRouter.navBarPage,
     );
   }
-}
-
-ThemeData appTheme() {
-  return ThemeData(
-    scaffoldBackgroundColor: Color(0xf9f9f9f9),
-    primaryColor: Colors.red,
-    inputDecorationTheme: const InputDecorationTheme(
-      labelStyle: TextStyle(color: Colors.black),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.grey),
-        borderRadius: BorderRadius.all(
-          Radius.circular(2),
-        ),
-      ),
-      errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red),
-          borderRadius: BorderRadius.all(
-            Radius.circular(2),
-          )),
-      focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red),
-          borderRadius: BorderRadius.all(
-            Radius.circular(2),
-          )),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(2),
-        ),
-      ),
-    ),
-  );
 }

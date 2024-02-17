@@ -6,6 +6,7 @@ abstract class DataBase {
   Stream<List<ProductModel>> newProductsStream();
 }
 
+//!Further Development : create add product and delete product feature & query by category
 class DataBaseController implements DataBase {
   final _service = FirestoreServices.instance;
   final userId;
@@ -14,7 +15,7 @@ class DataBaseController implements DataBase {
   @override
   Stream<List<ProductModel>> salesProductsStream() {
     return _service.collectionStream(
-      path: 'products/',
+      path: '/products',
       builder: (data, docId) {
         return ProductModel.fromMap(data!, docId);
       },
@@ -25,7 +26,7 @@ class DataBaseController implements DataBase {
   @override
   Stream<List<ProductModel>> newProductsStream() {
     return _service.collectionStream(
-      path: 'products/',
+      path: '/products',
       builder: (data, docId) {
         return ProductModel.fromMap(data!, docId);
       },

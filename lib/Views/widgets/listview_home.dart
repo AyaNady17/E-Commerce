@@ -12,6 +12,7 @@ class ListViewHome extends StatelessWidget {
         stream: productsStream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
+            print('stream connected');
             final products = snapshot.data;
             if (products == null || products.isEmpty) {
               return const Center(

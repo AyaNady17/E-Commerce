@@ -7,9 +7,10 @@ import 'package:test/Views/widgets/listview_home.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+  //! further Development : create view products category page
   @override
   Widget build(BuildContext context) {
-    final database = Provider.of<DataBase>(context);
+    final database = context.read<DataBase>();
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -79,7 +80,6 @@ Widget _buildHeaderOfList(
             title,
             style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
                 ),
           ),
           InkWell(

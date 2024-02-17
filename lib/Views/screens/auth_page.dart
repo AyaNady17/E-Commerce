@@ -129,7 +129,11 @@ class _AuthPageState extends State<AuthPage> {
                           alignment: Alignment.bottomRight,
                           child: InkWell(
                             child: model.authType == AuthType.login
-                                ? const Text("Forgot your password?")
+                                ? Text(
+                                    "Forgot your password?",
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
+                                  )
                                 : const Text(' '),
                             onTap: () {},
                           ),
@@ -153,9 +157,12 @@ class _AuthPageState extends State<AuthPage> {
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: InkWell(
-                            child: Text(model.authType == AuthType.login
-                                ? "Don't have an account? Register"
-                                : "Already have account? Login"),
+                            child: Text(
+                              model.authType == AuthType.login
+                                  ? "Don't have an account? Register"
+                                  : "Already have account? Login",
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
                             onTap: () {
                               _formKey.currentState!.reset();
                               _emailController.clear();

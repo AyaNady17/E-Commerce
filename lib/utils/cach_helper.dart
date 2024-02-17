@@ -4,6 +4,15 @@ class CacheHelper {
   static late SharedPreferences
       sharedPreferences; //* this is way of applying composition concept on oop
 
+  void saveChangedTheme(String theme) {
+    sharedPreferences.setString('THEME', theme);
+  }
+
+  String getCurrentTheme() {
+    final currentTheme = sharedPreferences.getString('THEME') ?? 'light';
+    return currentTheme;
+  }
+
 //! Here The Initialize of sharedPrefrences .
   init() async {
     sharedPreferences = await SharedPreferences.getInstance();

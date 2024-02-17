@@ -15,7 +15,7 @@ class MainButton extends StatelessWidget {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             elevation: 4,
-            backgroundColor: Theme.of(context).primaryColor),
+            backgroundColor: Colors.red),
         child: Text(
           title,
           style: Theme.of(context)
