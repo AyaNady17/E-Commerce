@@ -1,14 +1,41 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:test/Controllers/database_controller.dart';
 import 'package:test/Views/widgets/fav_circular_button_widget.dart';
 import 'package:test/Views/widgets/main_button.dart';
+import 'package:test/model/add_to_cart_model.dart';
 import 'package:test/model/product_model.dart';
+import 'package:test/utils/constants.dart';
 
 //!TODO:needs refactor
-class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({super.key, required this.productModel});
+class ProductDetailsScreen extends StatefulWidget {
+  ProductDetailsScreen(
+      {super.key, required this.productModel, required this.dataBase});
   final ProductModel productModel;
+  final DataBase dataBase;
+  @override
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+}
+
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  String selectedColor = "Colors ";
+
+  String selectedSize = "Sizes  ";
+
+  void _addToCart(DataBase dataBase) {
+    AddToCartModel addToCartModel = AddToCartModel(
+        id: documentIdFromLocalData(),
+        productId: widget.productModel.id,
+        title: widget.productModel.title,
+        price: widget.productModel.price,
+        imageUrl: widget.productModel.imageUrl,
+        color: selectedColor,
+        size: selectedSize,
+        quantity: 1);
+    dataBase.addToCart(addToCartModel);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +45,10 @@ class ProductDetailsScreen extends StatelessWidget {
         child: Column(
           children: [
             CustomAppBar(
-              productTitle: productModel.title,
+              productTitle: widget.productModel.title,
             ),
             ProductImage(
-              ImageURL: productModel.imageUrl,
+              ImageURL: widget.productModel.imageUrl,
             ),
             const SizedBox(
               height: 15,
@@ -35,12 +62,27 @@ class ProductDetailsScreen extends StatelessWidget {
                     children: [
                       MenuOptions(
                         items: const ['S', 'M', 'L', 'XL', 'XXL'],
+                        dropDownTitle: "Sizes   ",
+                        onChanged: (String? newSize) {
+                          setState(() {
+                            selectedSize = newSize!;
+                          });
+                        },
+                        selectedValue: selectedSize,
                       ),
                       const SizedBox(
                         width: 20,
                       ),
+                      //!Fix : selected value not appear in drop down menu
                       MenuOptions(
-                        items: const ['S', 'M', 'L', 'XL', 'XXL'],
+                        selectedValue: selectedColor,
+                        items: const ['Black', 'White', 'Red'],
+                        dropDownTitle: "Colors  ",
+                        onChanged: (newColor) {
+                          setState(() {
+                            selectedColor = newColor!;
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -49,15 +91,20 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 15,
+              height: 6,
             ),
-            ProductDetails(productModel: productModel),
+            ProductDetails(productModel: widget.productModel),
             const SizedBox(
-              height: 15,
+              height: 25,
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: MainButton(title: 'Add To Cart'),
+              child: MainButton(
+                title: 'Add To Cart',
+                onTap: () {
+                  _addToCart(widget.dataBase);
+                },
+              ),
             )
           ],
         ),
@@ -128,18 +175,18 @@ class ProductImage extends StatelessWidget {
   }
 }
 
-class MenuOptions extends StatefulWidget {
+class MenuOptions extends StatelessWidget {
   MenuOptions({
     super.key,
     required this.items,
+    required this.dropDownTitle,
+    required this.onChanged,
+    required this.selectedValue,
   });
   final List<String> items;
-  String? selectedValue;
-  @override
-  State<MenuOptions> createState() => _MenuOptionsState();
-}
-
-class _MenuOptionsState extends State<MenuOptions> {
+  final String selectedValue;
+  final String dropDownTitle;
+  void Function(String?)? onChanged;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -152,16 +199,10 @@ class _MenuOptionsState extends State<MenuOptions> {
 
       // dropdown below..
       child: DropdownButton<String>(
-        hint: Text(
-          "Size     ",
-        ),
-        value: widget.selectedValue,
-        onChanged: (newValue) {
-          setState(() {
-            widget.selectedValue = newValue!;
-          });
-        },
-        items: widget.items
+        // hint: Text(dropDownTitle),
+        value: selectedValue,
+        onChanged: onChanged,
+        items: items
             .map<DropdownMenuItem<String>>(
                 (String value) => DropdownMenuItem<String>(
                       value: value,

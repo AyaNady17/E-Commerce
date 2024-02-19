@@ -40,9 +40,7 @@ ThemeData appThemeLight() {
       ),
     ),
     textTheme: const TextTheme(
-        headlineMedium: TextStyle(
-          color: Colors.black,
-        ),
+        headlineMedium: TextStyle(color: Colors.black, fontSize: 24),
         bodyLarge: TextStyle(
           color: Colors.grey,
         ),

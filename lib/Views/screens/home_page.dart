@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
   //! further Development : create view products category page
   @override
   Widget build(BuildContext context) {
-    final database = context.read<DataBase>();
+    final database = Provider.of<DataBase>(context, listen: false);
     return SingleChildScrollView(
       child: Column(
         children: [

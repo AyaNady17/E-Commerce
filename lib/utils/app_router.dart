@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test/Controllers/database_controller.dart';
 import 'package:test/Views/screens/home_page.dart';
 import 'package:test/Views/screens/landing_page.dart';
 import 'package:test/Views/screens/auth_page.dart';
@@ -27,10 +28,13 @@ class AppRouter {
       case profilePage:
         return MaterialPageRoute(builder: (_) => const ProfilePage());
       case productPage:
-       final selectedProduct = settings.arguments as ProductModel;
+        final args = settings.arguments as Map<String, dynamic>;
+        final product = args['product'];
+        final database = args['database'];
         return MaterialPageRoute(
             builder: (_) => ProductDetailsScreen(
-                  productModel: selectedProduct,
+                  productModel: product,
+                  dataBase: database,
                 ));
     }
   }

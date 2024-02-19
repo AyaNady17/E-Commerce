@@ -1,8 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:test/Controllers/database_controller.dart';
+import 'package:test/model/user_data.dart';
 
 import 'package:test/services/auth.dart';
+import 'package:test/utils/cach_helper.dart';
+import 'package:test/utils/constants.dart';
 import 'package:test/utils/enums.dart';
 
 class AuthController with ChangeNotifier {
@@ -10,6 +15,8 @@ class AuthController with ChangeNotifier {
   String password;
   AuthType authType;
   final AuthBase authBase;
+  //!what the diff between these user id in auth controller & user model & database controller
+  //DataBase dataBase = DataBaseController(authBase.currentUser.uid);
   AuthController({
     this.email = " ",
     this.password = " ",
@@ -20,7 +27,14 @@ class AuthController with ChangeNotifier {
   Future<void> submit() async {
     try {
       if (authType == AuthType.register) {
-        await authBase.createUserWithEmailAndPassword(email, password);
+        final user =
+            await authBase.createUserWithEmailAndPassword(email, password);
+        final generatedId = documentIdFromLocalData();
+        DataBaseController(user?.uid ?? generatedId)
+            .setUserData(UserData(email: email, uid: user?.uid ?? generatedId));
+        print("registered user id :${user?.uid ?? generatedId}");
+        CacheHelper.sharedPreferences
+            .setString('uid', user?.uid ?? generatedId);
       } else {
         await authBase.loginUserWithEmailAndPassword(email, password);
       }

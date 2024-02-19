@@ -11,7 +11,7 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<AuthBase>(context).authStateChanges();
+    final currentUser = context.read<AuthBase>().currentUser;
     if (CacheHelper().getData(key: 'isLoggedIn') == true) {
       return const NavBarPage();
     } else {

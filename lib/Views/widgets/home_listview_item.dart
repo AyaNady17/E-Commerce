@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:test/Controllers/database_controller.dart';
 import 'package:test/Views/widgets/fav_circular_button_widget.dart';
 import 'package:test/model/product_model.dart';
 import 'package:test/utils/app_router.dart';
@@ -12,7 +14,10 @@ class ListViewHomeItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.of(context, rootNavigator: true)
-            .pushNamed(AppRouter.productPage, arguments: productModel);
+            .pushNamed(AppRouter.productPage, arguments: {
+          'product': productModel,
+          'database': Provider.of<DataBase>(context, listen: false)
+        });
       },
       child: DecoratedBox(
         decoration: BoxDecoration(
