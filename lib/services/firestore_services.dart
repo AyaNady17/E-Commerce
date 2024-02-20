@@ -15,6 +15,11 @@ class FirestoreServices {
     await reference.delete();
   }
 
+  Future<void> updateData(
+      {required String path, required Map<String, dynamic> data}) async {
+    _firestore.doc(path).update(data);
+  }
+
   Stream<T> documentStream<T>(
       {required String path,
       required T Function(Map<String, dynamic>? data, String docID) builder}) {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test/Controllers/database_controller.dart';
+import 'package:test/Views/screens/cart_page.dart';
+import 'package:test/Views/screens/checkout/checkout_page.dart';
 import 'package:test/Views/screens/home_page.dart';
 import 'package:test/Views/screens/landing_page.dart';
 import 'package:test/Views/screens/auth_page.dart';
@@ -15,6 +17,8 @@ class AppRouter {
   static const String landingPage = 'landingPage';
   static const String profilePage = 'profilePage';
   static const String productPage = 'productPage';
+  static const String cartPage = "CartPage";
+  static const String checkoutPage = "checkoutPage";
   static Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case homePage:
@@ -27,6 +31,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const LandingPage());
       case profilePage:
         return MaterialPageRoute(builder: (_) => const ProfilePage());
+      case cartPage:
+        return MaterialPageRoute(builder: (_) => const CartPage());
+      case checkoutPage:
+        return MaterialPageRoute(builder: (_) => const CheckoutPage());
       case productPage:
         final args = settings.arguments as Map<String, dynamic>;
         final product = args['product'];

@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:test/Controllers/database_controller.dart';
 import 'package:test/Views/widgets/fav_circular_button_widget.dart';
@@ -20,21 +21,39 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  String selectedColor = "Colors ";
+  String? selectedColor;
 
-  String selectedSize = "Sizes  ";
+  String? selectedSize;
 
+  //TODo: handel null size& color exception
   void _addToCart(DataBase dataBase) {
-    AddToCartModel addToCartModel = AddToCartModel(
-        id: documentIdFromLocalData(),
-        productId: widget.productModel.id,
-        title: widget.productModel.title,
-        price: widget.productModel.price,
-        imageUrl: widget.productModel.imageUrl,
-        color: selectedColor,
-        size: selectedSize,
-        quantity: 1);
-    dataBase.addToCart(addToCartModel);
+    try {
+      AddToCartModel addToCartModel = AddToCartModel(
+          id: documentIdFromLocalData(),
+          productId: widget.productModel.id,
+          title: widget.productModel.title,
+          price: widget.productModel.price,
+          imageUrl: widget.productModel.imageUrl,
+          color: selectedColor!,
+          size: selectedSize!,
+          quantity: 1);
+      dataBase.addToCart(addToCartModel);
+      Fluttertoast.showToast(
+          msg: "Product Added to Cart",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } on Exception catch (e) {
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
   }
 
   @override
@@ -62,7 +81,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     children: [
                       MenuOptions(
                         items: const ['S', 'M', 'L', 'XL', 'XXL'],
-                        dropDownTitle: "Sizes   ",
+                        hint: "Sizes   ",
                         onChanged: (String? newSize) {
                           setState(() {
                             selectedSize = newSize!;
@@ -77,7 +96,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       MenuOptions(
                         selectedValue: selectedColor,
                         items: const ['Black', 'White', 'Red'],
-                        dropDownTitle: "Colors  ",
+                        hint: "Colors  ",
                         onChanged: (newColor) {
                           setState(() {
                             selectedColor = newColor!;
@@ -179,13 +198,13 @@ class MenuOptions extends StatelessWidget {
   MenuOptions({
     super.key,
     required this.items,
-    required this.dropDownTitle,
+    required this.hint,
     required this.onChanged,
     required this.selectedValue,
   });
   final List<String> items;
-  final String selectedValue;
-  final String dropDownTitle;
+  final String? selectedValue;
+  final String hint;
   void Function(String?)? onChanged;
   @override
   Widget build(BuildContext context) {
@@ -199,7 +218,7 @@ class MenuOptions extends StatelessWidget {
 
       // dropdown below..
       child: DropdownButton<String>(
-        // hint: Text(dropDownTitle),
+        hint: Text(hint),
         value: selectedValue,
         onChanged: onChanged,
         items: items

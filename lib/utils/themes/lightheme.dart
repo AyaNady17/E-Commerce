@@ -3,6 +3,7 @@ import 'package:test/utils/themes/App%20Colors/app_colors_light.dart';
 
 ThemeData appThemeLight() {
   return ThemeData(
+    cardColor: Colors.white,
     scaffoldBackgroundColor: AppColorsLight.scaffoldBackgroundColor,
     primaryColor: AppColorsLight.primaryColor,
     iconTheme: const IconThemeData(
@@ -12,8 +13,8 @@ ThemeData appThemeLight() {
     elevatedButtonTheme: const ElevatedButtonThemeData(
         style:
             ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.red))),
-    appBarTheme:
-        const AppBarTheme(backgroundColor: AppColorsLight.primaryColor),
+    appBarTheme: const AppBarTheme(
+        backgroundColor: AppColorsLight.scaffoldBackgroundColor),
     dividerColor: AppColorsLight.dividerColor,
     inputDecorationTheme: const InputDecorationTheme(
       labelStyle: TextStyle(color: AppColorsLight.textColor),

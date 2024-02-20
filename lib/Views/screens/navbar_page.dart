@@ -4,6 +4,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:test/Controllers/auth_controller.dart';
 import 'package:test/Controllers/database_controller.dart';
+import 'package:test/Views/screens/cart_page.dart';
 import 'package:test/Views/screens/home_page.dart';
 import 'package:test/Views/screens/profile_page.dart';
 import 'package:test/services/auth.dart';
@@ -73,7 +74,7 @@ List<Widget> _buildScreens() {
   return [
     const HomePage(),
     Container(),
-    Container(),
+    const CartPage(),
     Container(),
     const ProfilePage(),
   ];

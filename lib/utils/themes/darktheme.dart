@@ -3,6 +3,8 @@ import 'package:test/utils/themes/App%20Colors/app_colors_dark.dart';
 
 ThemeData appThemeDark() {
   return ThemeData(
+    cardColor: AppColorsDark.secondaryColor,
+    appBarTheme: AppBarTheme(backgroundColor: AppColorsDark.secondaryColor),
     scaffoldBackgroundColor: AppColorsDark.scaffoldBackgroundColor,
     primaryColor: AppColorsDark.primaryColor,
     iconTheme: const IconThemeData(

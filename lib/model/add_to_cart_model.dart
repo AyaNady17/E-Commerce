@@ -9,8 +9,12 @@ class AddToCartModel {
   final String imageUrl;
   final String color;
   final String size;
-  final int quantity;
+  int quantity;
   final String productId;
+
+  set Quantity(int q) {
+    quantity = q;
+  }
 
   AddToCartModel(
       {required this.id,

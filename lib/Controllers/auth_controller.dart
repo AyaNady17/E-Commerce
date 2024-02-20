@@ -34,7 +34,7 @@ class AuthController with ChangeNotifier {
             .setUserData(UserData(email: email, uid: user?.uid ?? generatedId));
         print("registered user id :${user?.uid ?? generatedId}");
         CacheHelper.sharedPreferences
-            .setString('uid', user?.uid ?? generatedId);
+            .setString("uid", user?.uid ?? generatedId);
       } else {
         await authBase.loginUserWithEmailAndPassword(email, password);
       }
