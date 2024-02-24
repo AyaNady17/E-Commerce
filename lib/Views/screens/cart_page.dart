@@ -25,11 +25,10 @@ class CartPage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const CartListView(),
+              CartListView(),
               const SizedBox(
                 height: 15,
               ),
-              _buildTotalAmount(context),
               const SizedBox(
                 height: 15,
               ),
@@ -49,24 +48,66 @@ class CartPage extends StatelessWidget {
 }
 
 //TODO: enhance total amount section
-Widget _buildTotalAmount(BuildContext context) {
-  return Row(
-    children: [
-      Text(
-        "Total Amount:",
-        style: Theme.of(context).textTheme.bodyLarge,
-      ),
-      const Spacer(),
-      Text(
-        "51\$",
-        style: Theme.of(context).textTheme.titleMedium,
-      )
-    ],
-  );
+// class TotalAmount extends StatefulWidget {
+//   const TotalAmount({super.key});
+
+//   @override
+//   State<TotalAmount> createState() => _TotalAmountState();
+// }
+
+// class _TotalAmountState extends State<TotalAmount> {
+//   int total = 0;
+//   @override
+//   void didChangeDependencies() async {
+//     final myProducts =
+//         await Provider.of<DataBase>(context).myProductsCart().first;
+//     setState(() {
+//       myProducts.forEach((element) {
+//         total += (element.price) * (element.quantity);
+//       });
+//     });
+//     super.didChangeDependencies();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: [
+//         Text(
+//           "Total Amount:",
+//           style: Theme.of(context).textTheme.bodyLarge,
+//         ),
+//         const Spacer(),
+//         Text(
+//           "${total}\$",
+//           style: Theme.of(context).textTheme.titleMedium,
+//         )
+//       ],
+//     );
+//   }
+// }
+
+class CartListView extends StatefulWidget {
+  CartListView({super.key});
+
+  @override
+  State<CartListView> createState() => _CartListViewState();
 }
 
-class CartListView extends StatelessWidget {
-  const CartListView({super.key});
+class _CartListViewState extends State<CartListView> {
+  int total = 0;
+
+  @override
+  void didChangeDependencies() async {
+    final myProducts =
+        await Provider.of<DataBase>(context).myProductsCart().first;
+    setState(() {
+      myProducts.forEach((element) {
+        total += (element.price) * (element.quantity);
+      });
+    });
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,16 +122,36 @@ class CartListView extends StatelessWidget {
                 child: Text("No Products available"),
               );
             } else {
-              return SizedBox(
-                height: MediaQuery.of(context).size.height * 0.65,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: cartItems.length,
-                    itemBuilder: (context, Index) {
-                      return CartListViewItem(
-                        addToCartModel: cartItems[Index],
-                      );
-                    }),
+              return Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.65,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: cartItems.length,
+                        itemBuilder: (context, Index) {
+                          Provider.of<DataBase>(context).updateCartTotalAmount(
+                              cartItems[Index].price *
+                                  cartItems[Index].quantity);
+                          return CartListViewItem(
+                            addToCartModel: cartItems[Index],
+                          );
+                        }),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Total Amount:",
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const Spacer(),
+                      Text(
+                        "470\$",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      )
+                    ],
+                  ),
+                ],
               );
             }
           } else {
@@ -128,7 +189,6 @@ Widget _buildAppBar() {
     ],
   );
 }
-//TODO: delete product from cart
 
 class CartListViewItem extends StatelessWidget {
   const CartListViewItem({super.key, required this.addToCartModel});

@@ -14,6 +14,9 @@ abstract class DataBase {
   Future<void> addToCart(AddToCartModel addToCartModel);
   Future<void> deleteCartItem(String docId);
   Future<void> updateCartItemQuantity(String docId, int quantity);
+
+  Future<void> updateCartTotalAmount(int amount);
+  // Future<int> getCartTotalAmount();
 }
 
 //!Further Development : create add product and delete product feature & query by category
@@ -76,4 +79,15 @@ class DataBaseController implements DataBase {
     await _service.updateData(
         path: ApiPath.addToCart(userId, docId), data: {"quantity": quantity});
   }
+
+  @override
+  Future<void> updateCartTotalAmount(int amount) async {
+    await _service
+        .updateData(path: ApiPath.user(userId), data: {"totalAmount": amount});
+  }
+
+  // @override
+  // Future<int> getCartTotalAmount() async{
+  //  await _service.
+  // }
 }
